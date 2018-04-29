@@ -1,0 +1,13 @@
+<div class="container">
+
+    <div id="board">
+        <div *ngFor="let row of board" class="row">
+            <div *ngFor="let cell of row" class="tile" (click)="onClick(cell)">
+
+                <div *ngIf="(cell.length < 2)" class="icon">{{cell}}</div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
