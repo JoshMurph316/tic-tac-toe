@@ -7,8 +7,6 @@ import { Player } from './player.model';
 export class GameService {
     private user: Player = new Player('x');
     private zangief: Player = new Player('o');
-    private winner: string;
-    private draw_count = 0;
     private move_count = 0;
     private board = [
         ['TL', 'TM', 'TR'],
@@ -37,7 +35,6 @@ export class GameService {
         }
 
         if (this.move_count >= 5) {
-            this.draw_count ++;
             this.resetBoard();
         }
 
@@ -70,7 +67,6 @@ export class GameService {
                 } else {
                     this.zangief.wonGame();
                 }
-                console.log('col: ' + row);
                 return true;
             }
 
@@ -82,7 +78,7 @@ export class GameService {
             } else {
                 this.zangief.wonGame();
             }
-            console.log('left diag');
+
             return true;
         } else if (rightD.every(ele => ele === 'x') || rightD.every(ele => ele === 'o')) {
             if (this.user.getToken() === leftD[0]) {
@@ -90,7 +86,7 @@ export class GameService {
             } else {
                 this.zangief.wonGame();
             }
-            console.log('right diag');
+
             return true;
         }
 
