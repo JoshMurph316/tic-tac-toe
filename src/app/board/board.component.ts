@@ -10,6 +10,7 @@ import { BotService } from '../bot.service';
 })
 export class BoardComponent implements OnInit {
   board: string[][];
+  result: string;
 
   constructor(private game: GameService) { }
 

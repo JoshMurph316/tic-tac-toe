@@ -1,4 +1,7 @@
 <div class="container">
+    <div *ngIf="result === 'win'">
+        <p>You Won!</p>
+    </div>
 
     <div id="board">
         <div *ngFor="let row of board" class="row">
