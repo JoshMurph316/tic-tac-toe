@@ -12,13 +12,18 @@ export class BoardComponent implements OnInit {
   board: string[][];
   result: string;
 
-  constructor(private game: GameService) { }
+  constructor(private game: GameService) {}
 
   ngOnInit() {
+   this.setBoard();
+  }
+
+  setBoard() {
     this.board = this.game.getBoard();
   }
 
   onClick(tile: string) {
-    this.board = this.game.userMoved(tile);
+    this.game.userMoved(tile);
+    this.setBoard();
   }
 }

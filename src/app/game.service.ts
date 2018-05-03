@@ -7,6 +7,7 @@ import { Player } from './player.model';
 export class GameService {
     private user: Player = new Player('x');
     private zangief: Player = new Player('o');
+    private winning_row: string[];
     private move_count = 0;
     private board = [
         ['TL', 'TM', 'TR'],
@@ -17,6 +18,9 @@ export class GameService {
 
     getBoard() {
         return this.board.slice();
+    }
+    getWinningRow() {
+        return this.winning_row;
     }
 
     userMoved(tile: string) {
@@ -38,60 +42,38 @@ export class GameService {
             this.resetBoard();
         }
 
-        return this.getBoard();
     }
 
     private winCheck() {
         const leftD = [];
         const rightD = [];
+        let check_result = false;
+
+        const rowCheck = row => row.every(ele => ele === 'x') || row.every(ele => ele === 'o');
+        const setWinner = token => this.user.getToken() === token ? this.user.wonGame() : this.zangief.wonGame() ;
+
+        function check(row: string[]) {
+            if (rowCheck(row)) {
+                check_result = true;
+                setWinner(row[0]);
+            }
+        }
 
         for (let row = 0; row < this.board.length; row ++) {
             const col = [];
 
             leftD.push(this.board[row][row]);
             rightD.push(this.board[row][2 - row]);
-            for (let cell = 0; cell < this.board[row].length; cell++) {
-                col.push(this.board[cell][row]);
-            }
-            if (this.board[row].every(ele => ele === 'x') || this.board[row].every(ele => ele === 'o')) {
-                if (this.user.getToken() === this.board[row][0]) {
-                    this.user.wonGame();
-                } else {
-                    this.zangief.wonGame();
-                }
-                return true;
-            }
-            if (col.every(ele => ele === 'x') || col.every(ele => ele === 'o')) {
-                if (this.user.getToken() === col[0]) {
-                    this.user.wonGame();
-                } else {
-                    this.zangief.wonGame();
-                }
-                return true;
-            }
+            this.board[row].forEach((ele, cell) => col.push(this.board[cell][row]));
 
+            check(this.board[row]);
+            check(col);
         }
 
-        if (leftD.every(ele => ele === 'x') || leftD.every(ele => ele === 'o')) {
-            if (this.user.getToken() === leftD[0]) {
-                this.user.wonGame();
-            } else {
-                this.zangief.wonGame();
-            }
+        check(leftD);
+        check(rightD);
 
-            return true;
-        } else if (rightD.every(ele => ele === 'x') || rightD.every(ele => ele === 'o')) {
-            if (this.user.getToken() === leftD[0]) {
-                this.user.wonGame();
-            } else {
-                this.zangief.wonGame();
-            }
-
-            return true;
-        }
-
-
-        return false;
+        return check_result;
     }
 
     private updateBoard(token: string, move: string) {
