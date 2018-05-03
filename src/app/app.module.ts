@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
-import { GameService } from './game.service';
 import { BotService } from './bot.service';
 
 
@@ -16,7 +15,7 @@ import { BotService } from './bot.service';
   imports: [
     BrowserModule
   ],
-  providers: [GameService, BotService],
+  providers: [BotService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

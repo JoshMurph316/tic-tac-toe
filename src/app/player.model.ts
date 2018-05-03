@@ -2,6 +2,8 @@
 export class Player {
     private token: string;
     private win_count = 0;
+    private loss_count: number;
+    private games_played: number;
     private last_move: string;
     private moves_made: string[];
 
@@ -9,17 +11,10 @@ export class Player {
         this.token = token;
     }
 
-    makeMove(tile: string) {
-        this.last_move = tile;
-    }
-
     switchToken() {
         this.token = this.token === 'o' ? 'x' : 'o';
     }
 
-    getMove() {
-        return this.last_move;
-    }
     getToken() {
         return this.token;
     }
@@ -31,6 +26,5 @@ export class Player {
         this.win_count ++;
         this.last_move = '';
         this.moves_made = [];
-        console.log(this.token + ' won the round');
     }
 }

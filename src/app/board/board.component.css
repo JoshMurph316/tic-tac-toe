@@ -14,10 +14,26 @@
     justify-content: center;
 }
 
+.result {
+    font-family: 'Gugi', cursive;
+    font-size: 2em;
+}
+
+.draw {
+    color: blue;
+}
+
+.win {
+    color: green;
+}
+
+.lost {
+    color: red;
+}
+
 .row {
     display: flex;
     flex-wrap: wrap;
-    transition: all 4s ease-in;
 }
 
 .tile {
@@ -30,7 +46,7 @@
     align-items: center;
 }
 
-.tile:hover {
+.clickable:hover {
     cursor: pointer;
 }
 

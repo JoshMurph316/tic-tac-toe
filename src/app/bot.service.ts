@@ -6,7 +6,7 @@ export class BotService {
     private attack = 'Cyclone Lariat';
     private hot_spot = 'TL';
     private opponent = 'o';
-    private player = 'x';
+    private player = 'x' ;
     private won_last = false;
     private turn = 0;
 
