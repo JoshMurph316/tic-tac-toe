@@ -26,33 +26,37 @@ export class BoardComponent {
 
     this.updateBoard(this.user.getToken(), tile);
 
-    setTimeout(() => {
       if (this.winCheck()) {
         this.result = 'win';
         this.resetBoard();
       } else {
-        const bot_move = this.botService.getMove(this.board, this.bot.getToken());
-        this.updateBoard(this.bot.getToken(), bot_move);
+        this.botMove();
         if (this.winCheck()) {
           this.result = 'lost';
           this.resetBoard();
         }
       }
-    }, 1000);
+
+      if (this.move_count >= 9) {
+        this.result = 'draw';
+        this.resetBoard();
+    }
+  }
+
+  private botMove() {
+    const bot_move = this.botService.getMove(this.board, this.bot.getToken());
+    this.updateBoard(this.bot.getToken(), bot_move);
   }
 
   private updateBoard(token: string, move: string) {
     this.move_count ++;
+    console.log(this.move_count);
     for (let row = 0; row < this.board.length; row++) {
         for (let cell = 0; cell < this.board[row].length; cell++) {
             if (this.board[row][cell] === move) {
                 this.board[row][cell] = token;
             }
         }
-    }
-    if (this.move_count >= 9) {
-        this.result = 'draw';
-        this.resetBoard();
     }
   }
 
@@ -89,19 +93,16 @@ export class BoardComponent {
   }
 
   private resetBoard() {
-    setTimeout(() => {
-      this.move_count = 0;
-      this.winner = false;
-      this.board = [['TL', 'TM', 'TR'], ['ML', 'MM', 'MR'], ['BL', 'BM', 'BR']];
-      this.result = null;
-      this.user.switchToken();
-      this.bot.switchToken();
-    }, 1000);
+    this.move_count = 0;
+    this.winner = false;
+    this.board = [['TL', 'TM', 'TR'], ['ML', 'MM', 'MR'], ['BL', 'BM', 'BR']];
+    this.user.switchToken();
+    this.bot.switchToken();
 
-    // if (this.bot.getToken() === 'x') {
-    //   const bot_move = this.botService.getMove(this.board, this.bot.getToken());
-    //   this.updateBoard(this.bot.getToken(), bot_move);
-    // }
+    if (this.bot.getToken() === 'x') {
+      this.botMove();
+    }
+    setTimeout(() => this.result = '' , 500);
   }
 
 }

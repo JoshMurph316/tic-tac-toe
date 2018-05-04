@@ -52,6 +52,8 @@ export class BotService {
                     this.hot_spot = 'BL';
                 }
                 break;
+            default:
+            this.chooseAny();
         }
     }
 
@@ -96,6 +98,8 @@ export class BotService {
                     }
                 }
                 break;
+            default:
+            this.chooseAny();
         }
     }
 
@@ -127,7 +131,7 @@ export class BotService {
             if (this.open_spots[1][0] === 'ML') {
                 this.hot_spot = 'ML';
             } else {
-                this.hot_spot = 'TM';
+                this.chooseAny();
             }
         }
     }
@@ -178,6 +182,16 @@ export class BotService {
             }
         }
         return true;
+    }
+
+    private chooseAny() {
+        this.open_spots.forEach(row => {
+            row.forEach(cell => {
+                if (cell.length > 1) {
+                    this.hot_spot = cell;
+                }
+            });
+        });
     }
 
     private calcCellValue(row: number, cell: number) {
@@ -240,7 +254,7 @@ export class BotService {
     }
 
     private setUpGame(you: string) {
-        const new_round = you !== this.player; // <<<<===== might be broken; check original
+        const new_round = you !== this.player;
 
         if (new_round) {
             if (this.player === 'x') {

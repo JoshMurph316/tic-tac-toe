@@ -1,16 +1,17 @@
-<div class="container">
-    <div [ngClass]="result" class="result">
+<div [ngClass]="result" class="overlay">
 
-        <div *ngIf="result === 'win'">
-            <p>You Won!</p>
-        </div>
-        <div *ngIf="result === 'lost'">
-            <p>You Lost</p>
-        </div>
-        <div *ngIf="result === 'draw'">
-            <p>Draw</p>
-        </div>
+    <div *ngIf="result === 'win'">
+        <p>You Won!</p>
     </div>
+    <div *ngIf="result === 'lost'">
+        <p>You Lost...</p>
+    </div>
+    <div *ngIf="result === 'draw'">
+        <p>Draw</p>
+    </div>
+</div>
+
+<div class="container">
 
 
     <div id="board">
